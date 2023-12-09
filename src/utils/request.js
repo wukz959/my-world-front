@@ -33,8 +33,7 @@ instance.interceptors.response.use(function (response) {
   }
 
   Message({
-    // 服务器好像出问题了哦！！！再试试看?
-    message: '好像超时了哦！！！',
+    message: '服务器好像出了点问题哦！！！再试试看?',
     type: 'error',
     showClose: true
   })

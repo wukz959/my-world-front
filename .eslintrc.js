@@ -3,6 +3,8 @@ module.exports = {
   env: {
     node: true
   },
+  // 添加忽略模式
+  ignorePatterns: ['src/assets/**/*'],
   extends: [
     'plugin:vue/essential',
     '@vue/standard'
