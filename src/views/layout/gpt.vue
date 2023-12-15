@@ -3,7 +3,7 @@
     <div class="container">
       <el-main ref="test">
         <div v-for="item in chatRecords" :key="item.chatRecord">
-          <DialogBox :chatBox="item" :isSmallScreen="isSmallScreen"></DialogBox>
+          <DialogBox :chatBox="item" :isSmallScreen="isSmallScreen" @refresh="refreshAns"></DialogBox>
         </div>
       </el-main>
       <div class="footerDiv">
@@ -13,7 +13,7 @@
           :maxlength="maxLength"
           rows="3"
           v-model="inputText"
-          @keyup.enter="commitQuestion"
+          @keydown.enter="commitQuestion"
         ></textarea>
         <div class="btnBox">
           {{ count }}/{{ maxLength }}
@@ -21,12 +21,13 @@
             type="primary"
             icon="el-icon-thumb"
             :size="isSmallScreen ? 'small' : 'medium'"
-            :disabled="count == 0"
+            :disabled="isBlocked"
             @click="commitQuestion"
             circle
           ></el-button>
         </div>
       </div>
+      <div class="beian" v-html="beianTxt"></div>
     </div>
   </div>
 </template>
@@ -34,15 +35,17 @@
 <script>
 import DialogBox from '@/components/DialogBox'
 import { getMsgMaxLength, talkToGPT } from '@/api/gpt'
-import { mapMutations, mapState } from 'vuex'
-import { MY_MSG_TYPES, GPT_MSG_TYPES } from '@/utils/constants'
+import { mapGetters, mapMutations, mapState } from 'vuex'
+import { MY_MSG_TYPES, GPT_MSG_TYPES, ERROR_CHAT_RESP, BEI_AN } from '@/utils/constants'
 export default {
   name: 'Gpt',
   data () {
     return {
       isSmallScreen: false,
       inputText: '',
-      maxLength: 500
+      maxLength: 500,
+      beianTxt: BEI_AN,
+      isWaitingResp: false
     }
   },
   components: {
@@ -50,8 +53,12 @@ export default {
   },
   computed: {
     ...mapState('gptVuex', ['chatRecords']),
+    ...mapGetters('gptVuex', ['getQuestionByAnswer']),
     count () {
       return this.inputText.length
+    },
+    isBlocked () {
+      return this.count === 0 || this.isWaitingResp
     }
   },
   async created () {
@@ -70,15 +77,14 @@ export default {
     this.scrollToBottom()
   },
   methods: {
-    ...mapMutations('gptVuex', ['addChatRecords']),
-    updateCount () {
-      // this.count = this.inputText.length
-    },
-    async commitQuestion (event) {
-      if (event.shiftKey) {
-        // 识别shift + enter按键，阻止默认的enter行为
-        event.preventDefault()
+    ...mapMutations('gptVuex', ['addChatRecords', 'removeLastChatRecords']),
+    async commitQuestion (event = {}) {
+      if (event.shiftKey) { // shift + enter 换行
         return
+      }
+      if (event.key === 'Enter') { // 不换行
+        event.preventDefault()
+        if (this.isWaitingResp || this.count === 0) return
       }
       const myQuestion = {}
       myQuestion.chatRecord = this.inputText.replaceAll('\n', '<br/>')
@@ -88,22 +94,33 @@ export default {
       const reqBody = {}
       reqBody.question = this.inputText.trim()
       this.inputText = ''
-      this.updateCount()
       this.scrollToBottom()
-      const ans = await talkToGPT(reqBody)
-
+      // 加载中
+      const loading = {}
+      loading.owner = GPT_MSG_TYPES
+      loading.isLoading = true
+      this.addChatRecords(loading)
+      this.scrollToBottom()
+      let ans
+      try {
+        this.isWaitingResp = true
+        ans = await talkToGPT(reqBody)
+      } catch (error) {
+        this.errorRespHandler(error)
+        return
+      } finally {
+        this.isWaitingResp = false
+      }
+      // 得到回答
       const data = ans.data
       if (data.code !== 200) {
-        this.$message({
-          message: data.msg,
-          type: data.code < 500 ? 'warning' : 'error',
-          showClose: true
-        })
+        this.errorRespHandler(ans)
         return
       }
       const gptAnswer = {}
       gptAnswer.owner = GPT_MSG_TYPES
-      gptAnswer.chatRecord = data.data.replaceAll('\n', '<br/>')
+      gptAnswer.chatRecord = data.data.replaceAll('\\n', '<br/>')
+      this.removeLastChatRecords()
       this.addChatRecords(gptAnswer)
       this.scrollToBottom()
     },
@@ -114,6 +131,25 @@ export default {
         const chatViews = this.$el.querySelector('.el-main')
         chatViews.scrollTop = chatViews.scrollHeight // 滚动到底部
       })
+    },
+    errorRespHandler (errResp) {
+      const errorResp = {}
+      errorResp.owner = GPT_MSG_TYPES
+      errorResp.isError = true
+      errorResp.chatRecord = errResp.data ? errResp.data.msg : ERROR_CHAT_RESP
+      this.removeLastChatRecords()
+      this.addChatRecords(errorResp)
+      this.scrollToBottom()
+    },
+    refreshAns (ansId) {
+      const questionRecord = this.getQuestionByAnswer(ansId)
+      if (questionRecord === '' || this.isWaitingResp) {
+        return
+      }
+      this.inputText = questionRecord
+      this.removeLastChatRecords()
+      this.removeLastChatRecords()
+      this.commitQuestion()
     }
   }
 }

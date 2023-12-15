@@ -15,14 +15,15 @@
         <h4>愿常青树长青，愿一切都有希望</h4>
       </el-main>
       <el-footer height="220px">
-        <el-input placeholder="说你想说" class="inputBox" v-model="barrageContent">
+        <!-- <el-input placeholder="说你想说" class="inputBox" v-model="barrageContent">
           <el-button slot="append" class="sendBtn" @click="sendBarrage" :plain="true">发送</el-button>
         </el-input>
         <div class="barrageBox">
           <i v-if="barrageSwitch" class="el-icon-third086tanmuclose"  @click="switched"></i>
           <i v-else class="el-icon-third087tanmuopen closeSwitch"  @click="switched"></i>
-        </div>
+        </div> -->
       </el-footer>
+      <div class="beian" v-html="beianTxt"></div>
     </el-container>
   </div>
 </template>
@@ -30,34 +31,15 @@
 <script>
 import vueDanmaku from 'vue-danmaku'
 import { barrageGetReq, barrageSaveReq } from '@/api/home'
+import { BEI_AN } from '@/utils/constants'
 export default {
   name: 'Home',
   data () {
     return {
       danmus: [
         // 'danmu1',
-        // 'danmu2',
-        // 'danmu3',
-        // '...',
-        // '123',
-        // 'das',
-        // '你好啊',
-        // '123',
-        // '...特殊字符^*',
-        // '你好啊',
-        // 'AbCdEfG',
-        // '5aB2cE1',
-        // '随机内容~!',
         // '9pQwR2tU',
         // '随机1234',
-        // '^#特~?字符2',
-        // '中文内容测试',
-        // 'r@nd0mStr!ng',
-        // '7^T特s符X!e',
-        // '随机ABCD',
-        // '0123456789',
-        // '中文测试数据',
-        // '随机$$特符',
         // '1aBc2D&3E',
         // '随机内容123',
         // '你好World',
@@ -65,7 +47,8 @@ export default {
         // '9pQw!RtU'
       ],
       barrageSwitch: true,
-      barrageContent: ''
+      barrageContent: '',
+      beianTxt: BEI_AN
     }
   },
   created () {},
@@ -85,7 +68,6 @@ export default {
     },
     async getBarrages () {
       const barrageList = await barrageGetReq()
-      console.log('req')
       const arr = []
       barrageList.data.forEach(item => {
         arr.push(item.barrageContent)

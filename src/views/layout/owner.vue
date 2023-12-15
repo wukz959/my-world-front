@@ -16,6 +16,7 @@
           <BlogContent :detailBlog="detailBlog" @changeView = "show = true"></BlogContent>
         </div>
       </transition>
+      <div class="beian" v-html="beianTxt"></div>
     </div>
   </div>
 </template>
@@ -25,6 +26,7 @@ import BlogNotes from '@/components/BlogNotes'
 import BlogContent from '@/components/BlogContent'
 import OpenSource from '@/components/OpenSource'
 import { blogGetReq, openSourceGetReq } from '@/api/owner'
+import { BEI_AN } from '@/utils/constants'
 export default {
   name: 'Owner',
   data () {
@@ -33,7 +35,8 @@ export default {
       source: {},
       myBlogs: [],
       detailBlog: {},
-      openSource: []
+      openSource: [],
+      beianTxt: BEI_AN
     }
   },
   components: {

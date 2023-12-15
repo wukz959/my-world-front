@@ -92,6 +92,7 @@ export default {
     height: 140px;
     .openSide div {
       margin-right: 2px;
+      font-size: medium;
     }
   }
 }
