@@ -5,7 +5,12 @@
       <div class="openTitle flexCenter">
         <div v-html="openSource.title" class="titleHidden"></div>
       </div>
-      <div class="openContent" v-html="openSource.digest!=null?openSource.digest:openSource.content"></div>
+      <div
+        class="openContent"
+        v-html="
+          openSource.digest != null ? openSource.digest : openSource.content
+        "
+      ></div>
       <div class="openFooter flexCenter">
         日期 - {{ openSource.updateTime }}
       </div>
@@ -42,7 +47,6 @@ export default {
       border-right: 2px solid #36363a;
     }
   }
-
   .openZone {
     display: flex;
     flex-direction: column;
