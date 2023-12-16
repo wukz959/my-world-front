@@ -3,8 +3,8 @@ module.exports = defineConfig({
   transpileDependencies: true,
   outputDir: process.env.outputDir,
   devServer: {
+    open: true, // 自动打开浏览器
     port: 2365,
-    // historyApiFallback: true
     allowedHosts: 'all'
     // proxy: {
     //   '/myworld': {

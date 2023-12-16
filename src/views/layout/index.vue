@@ -34,12 +34,6 @@ export default {
   },
   mounted () {
     this.activeIndex = this.$route.path
-    // 先保留着看部署上去后移动端是否还会有问题
-    // this.$nextTick(() => {
-    //   console.log('trick begin')
-    //   this.navBlock = this.$refs.menuRef.offsetHeight + 'px'
-    //   console.log('trick end', 'the value is: ', this.navBlock)
-    // })
     this.navBlock = this.$refs.menuRef.offsetHeight + 'px'
   },
   methods: {
