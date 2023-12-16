@@ -4,7 +4,7 @@ module.exports = defineConfig({
   outputDir: process.env.outputDir,
   devServer: {
     open: true, // 自动打开浏览器
-    port: 2365,
+    port: process.env.SERVER_PORT,
     allowedHosts: 'all'
     // proxy: {
     //   '/myworld': {
