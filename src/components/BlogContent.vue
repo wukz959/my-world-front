@@ -119,7 +119,6 @@
 </template>
 
 <script>
-import { getLocalTime } from '@/utils/time'
 export default {
   props: ['detailBlog'],
   data () {
@@ -134,16 +133,6 @@ export default {
   },
   components: {},
   methods: {
-    async saveBlog () {
-      const obj = {}
-      obj.title = this.$refs.titleRef.innerHTML
-      obj.content = this.$refs.contentRef.innerHTML
-      // obj.types = 'BLOG'
-      obj.types = 'OPEN_SOURCE'
-      obj.createTime = getLocalTime()
-      obj.updateTime = getLocalTime()
-      // await blogSaveReq(obj)
-    },
     backIndex () {
       this.$emit('changeView')
     }
@@ -176,7 +165,7 @@ export default {
         text-align: center;
       }
       .el-main {
-        img {
+        /deep/ img {
           max-width: 100%;
         }
       }

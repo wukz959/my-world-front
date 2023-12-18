@@ -3,7 +3,7 @@
     <div class="menuBox" ref="menuRef">
       <el-menu
       class="menu"
-      :default-active="activeIndex"
+      :default-active="activePath"
       mode="horizontal"
       @select="handleSelect"
       background-color="#29292e"
@@ -28,8 +28,12 @@
 export default {
   data () {
     return {
-      activeIndex: '/home',
       navBlock: ''
+    }
+  },
+  computed: {
+    activePath () {
+      return this.$route.path
     }
   },
   mounted () {
@@ -68,6 +72,14 @@ export default {
     z-index: 1;
     opacity: 0.9;
   }
-
 }
+@media (max-width: 768px){
+  #app{
+    background: fixed no-repeat center/28% url('@/assets/background.png'),linear-gradient(to bottom right, rgba(30, 29, 67,0.8), rgba(43, 29, 99,0.3));
+    .routerView{
+      background: fixed no-repeat center/28% url('@/assets/background.png'),linear-gradient(to bottom right, rgba(30, 29, 67,0.8), rgba(43, 29, 99,0.3));
+    }
+  }
+}
+
 </style>

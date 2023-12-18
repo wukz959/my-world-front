@@ -51,23 +51,29 @@ export default {
 </script>
 
 <style lang="less" scoped>
+@bg-color-black: #2c2635;
 .app {
   display: flex;
   flex-direction: column;
-  background-color: #1e1b25;
+  background-color: @bg-color-black;
   border-radius: 8px;
   margin: 15px 0px;
   padding: 10px 5px;
   color: #f1f1f2;
+  opacity: 0.9;
   .top {
     display: flex;
-    background-color: #1e1b25;
+    background-color: @bg-color-black;
     .header {
       flex: 1;
       text-align: center;
       align-self: flex-start;
+      .el-avatar{
+        background-color: @bg-color-black;
+      }
     }
     .content {
+      background-color: @bg-color-black;
       flex: 10;
       white-space: pre-wrap;
       word-wrap: break-word;
@@ -99,9 +105,6 @@ export default {
       border-radius: 5px;
       padding: 2px 5px;
       word-wrap: break-word;
-    }
-    .el-avatar {
-      background: #1e1b25;
     }
   }
   .bottom {

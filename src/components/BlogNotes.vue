@@ -28,10 +28,11 @@ export default {
 </script>
 
 <style lang="less" scoped>
+@bg-color-black: #2c2635;
 .app {
   .container{
     height: 150px;
-    background: #2c2635;
+    background: @bg-color-black;
     opacity: 0.9;
     margin: 15px 0;
     padding: 4px 15px;
@@ -52,6 +53,7 @@ export default {
     .content{
       margin: 10px 0;
       padding: 0 10px 0 0;
+
       color: #888890;
       overflow: hidden;//多出的隐藏
       text-overflow: ellipsis;//多出部分用...代替

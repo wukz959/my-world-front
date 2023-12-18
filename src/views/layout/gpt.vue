@@ -1,7 +1,7 @@
 <template>
   <div class="app">
     <div class="container">
-      <el-main ref="test">
+      <el-main>
         <div v-for="item in chatRecords" :key="item.chatRecord">
           <DialogBox :chatBox="item" :isSmallScreen="isSmallScreen" @refresh="refreshAns"></DialogBox>
         </div>

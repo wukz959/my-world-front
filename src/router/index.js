@@ -4,9 +4,9 @@ import Layout from '@/views/layout'
 import Home from '@/views/layout/home'
 import Gpt from '@/views/layout/gpt'
 import Owner from '@/views/layout/owner'
+import Editor from '@/views/layout/editor'
 
 Vue.use(VueRouter)
-
 const routes = [
   {
     path: '/',
@@ -19,6 +19,10 @@ const routes = [
     ]
   }
 ]
+// 供开发使用，生产环境不能出现
+if (process.env.NODE_ENV === 'development') {
+  routes.push({ path: '/editor2001', component: Editor })
+}
 
 const router = new VueRouter({
   mode: 'history',
