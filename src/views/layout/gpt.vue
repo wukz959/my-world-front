@@ -101,6 +101,11 @@ export default {
         message: '准备调用addChatRecords方法执行',
         type: 'warning'
       })
+      this.$message({
+        showClose: true,
+        message: '准备调用addChatRecords方法执行123',
+        type: 'warning'
+      })
       this.addChatRecords(myQuestion)
 
       const reqBody = {}
