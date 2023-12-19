@@ -82,15 +82,16 @@ export default {
       if (event.shiftKey) { // shift + enter 换行
         return
       }
-      if (event.key === 'Enter') { // 不换行
+      if (event.key === 'Enter') { // 禁止换行
         event.preventDefault()
-        if (this.isWaitingResp || this.count === 0) return
+      }
+      if (this.isWaitingResp || this.inputText.trim() === '') {
+        return
       }
       const myQuestion = {}
-      myQuestion.chatRecord = this.inputText.replaceAll('\n', '<br/>')
+      myQuestion.chatRecord = this.inputText.replace(/\n/g, '<br/>')
       myQuestion.owner = MY_MSG_TYPES
       this.addChatRecords(myQuestion)
-
       const reqBody = {}
       reqBody.question = this.inputText.trim()
       this.inputText = ''
@@ -119,7 +120,7 @@ export default {
       }
       const gptAnswer = {}
       gptAnswer.owner = GPT_MSG_TYPES
-      gptAnswer.chatRecord = data.data.replaceAll('\\n', '<br/>')
+      gptAnswer.chatRecord = data.data.replace(/\n/g, '<br/>')
       this.removeLastChatRecords()
       this.addChatRecords(gptAnswer)
       this.scrollToBottom()

@@ -19,11 +19,13 @@ a{
     -webkit-box-orient: vertical;//
 }
 
-// 取消窗口滚动条
-// ::-webkit-scrollbar {
-//     width: 0px;
-// }
-  
+/* 设置滚动条的样式 */
+::-webkit-scrollbar {
+    // width: 0px; // 取消窗口滚动条
+    width: 5px;
+}
+
+/* 滚动槽 */
 // 美化滚动条样式
 ::-webkit-scrollbar-track {
   width: 6px;
@@ -32,7 +34,7 @@ a{
   -moz-border-radius: 2em;
   border-radius: 2em;
 }
-
+/* 滚动条滑块 */
 ::-webkit-scrollbar-thumb {
   background-color: rgba(255, 255, 255,.5);
   background-clip: padding-box;
