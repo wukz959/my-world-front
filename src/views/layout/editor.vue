@@ -146,7 +146,6 @@ export default {
       obj.createTime = getLocalTime()
       obj.updateTime = getLocalTime()
       this.detailBlog = obj
-      console.log('obj: ', obj)
     },
     async handleSave () {
       await blogSaveReq(this.detailBlog)

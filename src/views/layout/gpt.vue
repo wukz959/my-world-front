@@ -120,7 +120,7 @@ export default {
       }
       const gptAnswer = {}
       gptAnswer.owner = GPT_MSG_TYPES
-      gptAnswer.chatRecord = data.data.replace(/\n/g, '<br/>')
+      gptAnswer.chatRecord = data.data.replace(/\\n/g, '<br/>')
       this.removeLastChatRecords()
       this.addChatRecords(gptAnswer)
       this.scrollToBottom()
