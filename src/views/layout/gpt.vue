@@ -93,11 +93,6 @@ export default {
       if (this.isWaitingResp || this.inputText.trim() === '') {
         return
       }
-      this.$message({
-        showClose: true,
-        message: '有进入commitQuestion方法执行',
-        type: 'warning'
-      })
       const myQuestion = {}
       myQuestion.chatRecord = this.inputText.replaceAll('\n', '<br/>')
       myQuestion.owner = MY_MSG_TYPES
