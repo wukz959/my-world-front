@@ -80,31 +80,21 @@ export default {
     ...mapMutations('gptVuex', ['addChatRecords', 'removeLastChatRecords']),
     async commitQuestion (event = {}) {
       if (event.shiftKey) { // shift + enter 换行
-        this.$message({
-          showClose: true,
-          message: 'return shiftKey',
-          type: 'warning'
-        })
         return
       }
-      if (event.key === 'Enter') { // 不换行
+      if (event.key === 'Enter') { // 禁止换行
         event.preventDefault()
       }
       if (this.isWaitingResp || this.inputText.trim() === '') {
         return
       }
       const myQuestion = {}
-      console.log('inputText: ' + this.inputText)
-      myQuestion.chatRecord = this.inputText.replaceAll('\n', '<br/>')
+      myQuestion.chatRecord = this.inputText.replace(/\n/g, '<br/>')
       myQuestion.owner = MY_MSG_TYPES
-      console.log('准备调用addChatRecords方法执行')
-      console.log('准备调用addChatRecords方法执行123')
       this.addChatRecords(myQuestion)
-
       const reqBody = {}
       reqBody.question = this.inputText.trim()
       this.inputText = ''
-      console.log('准备执行scrollToBottom')
       this.scrollToBottom()
       // 加载中
       const loading = {}
@@ -112,30 +102,25 @@ export default {
       loading.isLoading = true
       this.addChatRecords(loading)
       this.scrollToBottom()
-      console.log('有提交聊天记录，准备进入talkToGPT方法执行')
       let ans
       try {
         this.isWaitingResp = true
         ans = await talkToGPT(reqBody)
       } catch (error) {
-        console.log('发送消息时出错了：' + error)
         this.errorRespHandler(error)
         return
       } finally {
         this.isWaitingResp = false
       }
-      console.log('离开talkToGPT方法执行，判断响应信息')
       // 得到回答
       const data = ans.data
       if (data.code !== 200) {
-        console.log('响应码不是200：' + data.msg)
         this.errorRespHandler(ans)
         return
       }
-      console.log('正常执行')
       const gptAnswer = {}
       gptAnswer.owner = GPT_MSG_TYPES
-      gptAnswer.chatRecord = data.data.replaceAll('\\n', '<br/>')
+      gptAnswer.chatRecord = data.data.replace(/\n/g, '<br/>')
       this.removeLastChatRecords()
       this.addChatRecords(gptAnswer)
       this.scrollToBottom()

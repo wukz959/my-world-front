@@ -23,7 +23,10 @@ Vue.use(Avatar)
 Vue.prototype.$ELEMENT = { size: 'small', zIndex: 3000 }
 Vue.config.productionTip = false
 Vue.prototype.$message = Message
-new VConsole()
+if(process.env.NODE_ENV === 'development'){
+  new VConsole()
+}
+
 new Vue({
   router,
   store,
