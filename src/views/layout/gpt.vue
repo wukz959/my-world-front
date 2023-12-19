@@ -101,11 +101,21 @@ export default {
       const myQuestion = {}
       myQuestion.chatRecord = this.inputText.replaceAll('\n', '<br/>')
       myQuestion.owner = MY_MSG_TYPES
+      this.$message({
+        showClose: true,
+        message: '准备调用addChatRecords方法执行',
+        type: 'warning'
+      })
       this.addChatRecords(myQuestion)
 
       const reqBody = {}
       reqBody.question = this.inputText.trim()
       this.inputText = ''
+      this.$message({
+        showClose: true,
+        message: '准备执行scrollToBottom',
+        type: 'warning'
+      })
       this.scrollToBottom()
       // 加载中
       const loading = {}
