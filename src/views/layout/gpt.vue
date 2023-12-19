@@ -94,28 +94,17 @@ export default {
         return
       }
       const myQuestion = {}
+      console.log('inputText: ' + this.inputText)
       myQuestion.chatRecord = this.inputText.replaceAll('\n', '<br/>')
       myQuestion.owner = MY_MSG_TYPES
-      this.$message({
-        showClose: true,
-        message: '准备调用addChatRecords方法执行',
-        type: 'warning'
-      })
-      this.$message({
-        showClose: true,
-        message: '准备调用addChatRecords方法执行123',
-        type: 'warning'
-      })
+      console.log('准备调用addChatRecords方法执行')
+      console.log('准备调用addChatRecords方法执行123')
       this.addChatRecords(myQuestion)
 
       const reqBody = {}
       reqBody.question = this.inputText.trim()
       this.inputText = ''
-      this.$message({
-        showClose: true,
-        message: '准备执行scrollToBottom',
-        type: 'warning'
-      })
+      console.log('准备执行scrollToBottom')
       this.scrollToBottom()
       // 加载中
       const loading = {}
@@ -123,47 +112,27 @@ export default {
       loading.isLoading = true
       this.addChatRecords(loading)
       this.scrollToBottom()
-      this.$message({
-        showClose: true,
-        message: '有提交聊天记录，准备进入talkToGPT方法执行',
-        type: 'warning'
-      })
+      console.log('有提交聊天记录，准备进入talkToGPT方法执行')
       let ans
       try {
         this.isWaitingResp = true
         ans = await talkToGPT(reqBody)
       } catch (error) {
-        this.$message({
-          showClose: true,
-          message: '发送消息时出错了：' + error.data,
-          type: 'warning'
-        })
+        console.log('发送消息时出错了：' + error)
         this.errorRespHandler(error)
         return
       } finally {
         this.isWaitingResp = false
       }
-      this.$message({
-        showClose: true,
-        message: '离开talkToGPT方法执行，判断响应信息',
-        type: 'warning'
-      })
+      console.log('离开talkToGPT方法执行，判断响应信息')
       // 得到回答
       const data = ans.data
       if (data.code !== 200) {
-        this.$message({
-          showClose: true,
-          message: '响应码不是200：' + data.msg,
-          type: 'warning'
-        })
+        console.log('响应码不是200：' + data.msg)
         this.errorRespHandler(ans)
         return
       }
-      this.$message({
-        showClose: true,
-        message: '正常执行',
-        type: 'success'
-      })
+      console.log('正常执行')
       const gptAnswer = {}
       gptAnswer.owner = GPT_MSG_TYPES
       gptAnswer.chatRecord = data.data.replaceAll('\\n', '<br/>')

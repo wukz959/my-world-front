@@ -4,7 +4,7 @@ module.exports = {
     node: true
   },
   // 添加忽略模式
-  ignorePatterns: ['src/assets/**/*'],
+  ignorePatterns: ['src/assets/**/*', 'src/main.js'],
   extends: [
     'plugin:vue/essential',
     '@vue/standard'
