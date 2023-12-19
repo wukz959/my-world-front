@@ -88,11 +88,6 @@ export default {
         return
       }
       if (event.key === 'Enter') { // 不换行
-        this.$message({
-          showClose: true,
-          message: 'return enter',
-          type: 'warning'
-        })
         event.preventDefault()
       }
       if (this.isWaitingResp || this.inputText.trim() === '') {
@@ -118,22 +113,47 @@ export default {
       loading.isLoading = true
       this.addChatRecords(loading)
       this.scrollToBottom()
+      this.$message({
+        showClose: true,
+        message: '有提交聊天记录，准备进入talkToGPT方法执行',
+        type: 'warning'
+      })
       let ans
       try {
         this.isWaitingResp = true
         ans = await talkToGPT(reqBody)
       } catch (error) {
+        this.$message({
+          showClose: true,
+          message: '发送消息时出错了：' + error.data,
+          type: 'warning'
+        })
         this.errorRespHandler(error)
         return
       } finally {
         this.isWaitingResp = false
       }
+      this.$message({
+        showClose: true,
+        message: '离开talkToGPT方法执行，判断响应信息',
+        type: 'warning'
+      })
       // 得到回答
       const data = ans.data
       if (data.code !== 200) {
+        this.$message({
+          showClose: true,
+          message: '响应码不是200：' + data.msg,
+          type: 'warning'
+        })
         this.errorRespHandler(ans)
         return
       }
+      this.$message({
+        showClose: true,
+        message: '正常执行',
+        type: 'success'
+      })
       const gptAnswer = {}
       gptAnswer.owner = GPT_MSG_TYPES
       gptAnswer.chatRecord = data.data.replaceAll('\\n', '<br/>')
