@@ -27,15 +27,14 @@ import BlogContent from '@/components/BlogContent'
 import OpenSource from '@/components/OpenSource'
 import { blogGetReq, openSourceGetReq } from '@/api/owner'
 import { BEI_AN } from '@/utils/constants'
+import { mapMutations, mapState } from 'vuex'
 export default {
   name: 'Owner',
   data () {
     return {
       show: true,
       source: {},
-      myBlogs: [],
       detailBlog: {},
-      openSource: [],
       beianTxt: BEI_AN
     }
   },
@@ -44,11 +43,19 @@ export default {
     BlogContent,
     OpenSource
   },
+  computed: {
+    ...mapState('ownerVuex', ['myBlogs', 'openSource'])
+  },
   async mounted () {
-    this.myBlogs = await blogGetReq()
-    this.openSource = await openSourceGetReq()
+    if (this.myBlogs.length === 0 || this.openSource.length === 0) {
+      const myBlogs = await blogGetReq()
+      const openSource = await openSourceGetReq()
+      this.setMyBlogs(myBlogs)
+      this.setOpenSource(openSource)
+    }
   },
   methods: {
+    ...mapMutations('ownerVuex', ['setMyBlogs', 'setOpenSource']),
     handleNoteClick (index) {
       this.detailBlog = this.myBlogs.data[index]
       this.show = false

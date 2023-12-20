@@ -51,11 +51,10 @@ export default {
 </script>
 
 <style lang="less" scoped>
-@bg-color-black: #2c2635;
 .app {
   display: flex;
   flex-direction: column;
-  background-color: @bg-color-black;
+  background-color: var(--bg-color-black);
   border-radius: 8px;
   margin: 15px 0px;
   padding: 10px 5px;
@@ -63,17 +62,17 @@ export default {
   opacity: 0.9;
   .top {
     display: flex;
-    background-color: @bg-color-black;
+    background-color: var(--bg-color-black);
     .header {
       flex: 1;
       text-align: center;
       align-self: flex-start;
       .el-avatar{
-        background-color: @bg-color-black;
+        background-color: var(--bg-color-black);
       }
     }
     .content {
-      background-color: @bg-color-black;
+      background-color: var(--bg-color-black);
       flex: 10;
       white-space: pre-wrap;
       word-wrap: break-word;

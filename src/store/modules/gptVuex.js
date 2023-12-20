@@ -22,6 +22,7 @@ export default {
     getChatRecords (state) {
       return state.chatRecords
     },
+    // getters不能传参，通过这种方式强行传参
     getQuestionByAnswer: (state) => (ansId) => {
       let ansIndex = 0
       state.chatRecords.forEach((item, index) => {
