@@ -5,7 +5,6 @@
       class="menu"
       :default-active="activePath"
       mode="horizontal"
-      @select="handleSelect"
       background-color="#29292e"
       text-color="#ffffff"
       active-text-color="#d097ff"
@@ -16,7 +15,7 @@
         hello-enen
       </el-menu-item>
         <el-menu-item index="/home">首页</el-menu-item>
-        <el-menu-item index="/gpt">ChatGpt</el-menu-item>
+        <el-menu-item :index="isMobile()?'/gptMobile':'/gpt'">ChatGpt</el-menu-item>
         <el-menu-item index="/owner">个人博客</el-menu-item>
       </el-menu>
     </div>
@@ -25,10 +24,12 @@
 </template>
 
 <script>
+import isMobile from '@/mixins/isMobile'
 export default {
+  mixins: [isMobile],
   data () {
     return {
-      navBlock: ''
+      navBlock: '' // 导航栏高度，让router-view页面不会与导航栏重叠
     }
   },
   computed: {
@@ -36,13 +37,26 @@ export default {
       return this.$route.path
     }
   },
+  watch: {
+    activePath: {
+      handler (newVal) {
+        if (newVal === '/gptMobile') {
+          this.navBlock = '0px'
+        } else {
+          this.navBlock = this.$refs.menuRef.offsetHeight + 'px'
+        }
+      }
+    }
+  },
   mounted () {
     this.activeIndex = this.$route.path
-    this.navBlock = this.$refs.menuRef.offsetHeight + 'px'
+    if (this.activeIndex === '/gptMobile') {
+      this.navBlock = '0px'
+    } else {
+      this.navBlock = this.$refs.menuRef.offsetHeight + 'px'
+    }
   },
   methods: {
-    handleSelect (key, keyPath) {
-    }
   }
 }
 </script>

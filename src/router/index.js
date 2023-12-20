@@ -5,6 +5,7 @@ import Home from '@/views/layout/home'
 import Gpt from '@/views/layout/gpt'
 import Owner from '@/views/layout/owner'
 import Editor from '@/views/layout/editor'
+import GptMobile from '@/views/mobile/gpt'
 
 Vue.use(VueRouter)
 const routes = [
@@ -15,7 +16,8 @@ const routes = [
       { path: '', redirect: '/home' },
       { path: '/home', component: Home },
       { path: '/gpt', component: Gpt },
-      { path: '/owner', component: Owner }
+      { path: '/owner', component: Owner },
+      { path: '/gptMobile', component: GptMobile }
     ]
   }
 ]
