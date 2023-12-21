@@ -1,6 +1,6 @@
 <template>
   <div class="app">
-    <div class="main" :style="{ 'height': mainHeight}">
+    <div class="main" :style="{ 'height': windowHeight}">
       <el-main class="chatDialog">
         <div v-for="item in chatRecords" :key="item.chatRecord">
           <DialogBox :chatBox="item" :isSmallScreen="isSmallScreen" @refresh="refreshAns"></DialogBox>
@@ -29,11 +29,20 @@ export default {
   mixins: [gptCommonMethods],
   data () {
     return {
-      mainHeight: ''
+      windowHeight: document.documentElement.clientHeight + 'px'
     }
   },
   mounted () {
-    this.mainHeight = document.documentElement.clientHeight + 'px'
+    this.updateWindowHeight()
+    window.addEventListener('resize', this.updateWindowHeight) // 监听窗口高度变化
+  },
+  beforeDestroy () {
+    window.removeEventListener('resize', this.updateWindowHeight)
+  },
+  methods: {
+    updateWindowHeight () {
+      this.windowHeight = document.documentElement.clientHeight + 'px'
+    }
   }
 }
 </script>
