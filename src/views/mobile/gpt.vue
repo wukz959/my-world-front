@@ -1,6 +1,6 @@
 <template>
   <div class="app">
-    <div class="main">
+    <div class="main" :style="{ 'height': mainHeight}">
       <el-main class="chatDialog">
         <div v-for="item in chatRecords" :key="item.chatRecord">
           <DialogBox :chatBox="item" :isSmallScreen="isSmallScreen" @refresh="refreshAns"></DialogBox>
@@ -26,7 +26,15 @@
 import { gptCommonMethods } from '@/mixins/gpt'
 export default {
   name: 'Gpt',
-  mixins: [gptCommonMethods]
+  mixins: [gptCommonMethods],
+  data () {
+    return {
+      mainHeight: ''
+    }
+  },
+  mounted () {
+    this.mainHeight = document.documentElement.clientHeight + 'px'
+  }
 }
 </script>
 
@@ -36,7 +44,6 @@ export default {
   text-align: center;
   .main{
     width: 100%;
-    height: 100vh;
     background-color: rgba(0, 0, 0, 0);
     display: flex;
     flex-direction: column;
