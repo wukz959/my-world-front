@@ -11,7 +11,7 @@ let loadingInstance = null
 instance.interceptors.request.use(function (config) {
   // 在发送请求之前做些什么
   if (!config.hideLoading) {
-    loadingInstance = Loading.service({ fullscreen: false, text: '我也很急，你别急...' })
+    loadingInstance = Loading.service({ fullscreen: true, text: '我也很急，你别急...' })
   }
   return config
 }, function (error) {

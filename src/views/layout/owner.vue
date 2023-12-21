@@ -10,13 +10,14 @@
             <div ref="blogBoxRef" v-for="(item,index) in myBlogs.data" :key="item.id">
               <BlogNotes @noteClick="handleNoteClick(index)" :blog="item"></BlogNotes>
             </div>
+
           </div>
         </div>
         <div v-else key="contentKey">
           <BlogContent :detailBlog="detailBlog" @changeView = "show = true"></BlogContent>
         </div>
       </transition>
-      <div class="beian" v-html="beianTxt"></div>
+      <div class="myBeian" v-html="beianTxt"></div>
     </div>
   </div>
 </template>
@@ -75,6 +76,14 @@ export default {
     flex-direction: column;
     padding: 3vh 18vw;
     border-radius: 2px;
+  }
+  .myBeian {
+    position: absolute;
+    padding: 3px 0 5px 0;
+    font-size: small;
+    width: 100%;
+    text-align: center;
+    color: gray;
   }
   @media (max-width: 800px){
   .main{
