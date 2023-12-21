@@ -1,6 +1,6 @@
 <template>
   <div class="app">
-    <div class="container">
+    <div class="container" style="overflow: auto">
       <transition name="slide-fade" mode="out-in">
         <div v-if="show" key="noteKey">
           <div class="main">
