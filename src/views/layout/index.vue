@@ -96,8 +96,7 @@ export default {
       left: 0;
       top: 0;
       width: 100%;
-      height: 100vh; /* Fallback for browsers that do not support Custom Properties */
-      // height: calc(var(--vh, 1vh) * 100 - 46px);
+      height: 100vh;
       -webkit-transform: translateZ(0);
       background: fixed no-repeat center/28% url('@/assets/background.png'),linear-gradient(to bottom right, rgba(30, 29, 67), rgba(43, 29, 99,0.6));
     }
