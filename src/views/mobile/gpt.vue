@@ -1,6 +1,6 @@
 <template>
   <div class="app">
-    <div class="main" :style="{ 'height': windowHeight}">
+    <div class="main" :style="{ 'height': myClientHeight}">
       <el-main class="chatDialog">
         <div v-for="item in chatRecords" :key="item.chatRecord">
           <DialogBox :chatBox="item" :isSmallScreen="isSmallScreen" @refresh="refreshAns"></DialogBox>
@@ -24,26 +24,10 @@
 
 <script>
 import { gptCommonMethods } from '@/mixins/gpt'
+import { clientHeightNow as myClientHeight } from '@/mixins/clientHeightNow'
 export default {
   name: 'Gpt',
-  mixins: [gptCommonMethods],
-  data () {
-    return {
-      windowHeight: document.documentElement.clientHeight + 'px'
-    }
-  },
-  mounted () {
-    this.updateWindowHeight()
-    window.addEventListener('resize', this.updateWindowHeight) // 监听窗口高度变化
-  },
-  beforeDestroy () {
-    window.removeEventListener('resize', this.updateWindowHeight)
-  },
-  methods: {
-    updateWindowHeight () {
-      this.windowHeight = document.documentElement.clientHeight + 'px'
-    }
-  }
+  mixins: [gptCommonMethods, myClientHeight]
 }
 </script>
 
@@ -75,6 +59,9 @@ export default {
         background-color: #ffffff;
         border-radius: 2px;
         margin: 5px 5px;
+      }
+      /deep/ .el-textarea__inner::-webkit-scrollbar{
+        width: 0px
       }
       .chatBtn{
         border-radius: 5px;

@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <el-container>
+    <div>
       <vue-danmaku
         v-model="danmus"
         style="height: 100px"
@@ -10,21 +10,21 @@
         class="barrage"
         ref="barrageKit"
       ></vue-danmaku>
-      <el-main>
+      <div>
         <h1>创意不止，有趣至上</h1>
         <h4>愿常青树长青，愿一切都有希望</h4>
-      </el-main>
-      <el-footer height="220px">
-        <!-- <el-input placeholder="说你想说" class="inputBox" v-model="barrageContent">
+      </div>
+      <!-- <el-footer height="220px">
+        <el-input placeholder="说你想说" class="inputBox" v-model="barrageContent">
           <el-button slot="append" class="sendBtn" @click="sendBarrage" :plain="true">发送</el-button>
         </el-input>
         <div class="barrageBox">
           <i v-if="barrageSwitch" class="el-icon-third086tanmuclose"  @click="switched"></i>
           <i v-else class="el-icon-third087tanmuopen closeSwitch"  @click="switched"></i>
-        </div> -->
-      </el-footer>
+        </div>
+      </el-footer> -->
       <div class="beian" v-html="beianTxt"></div>
-    </el-container>
+    </div>
   </div>
 </template>
 

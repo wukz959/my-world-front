@@ -19,14 +19,15 @@
         <el-menu-item index="/owner">个人博客</el-menu-item>
       </el-menu>
     </div>
-    <router-view class="routerView" :style="{'padding-top': navBlock}" ref="routerRef"></router-view>
+    <router-view class="routerView" :style="{'padding-top': navBlock, 'height': myClientHeight}" ref="routerRef"></router-view>
   </div>
 </template>
 
 <script>
 import isMobile from '@/mixins/isMobile'
+import { clientHeightNow as myClientHeight } from '@/mixins/clientHeightNow'
 export default {
-  mixins: [isMobile],
+  mixins: [isMobile, myClientHeight],
   data () {
     return {
       navBlock: '' // 导航栏高度，让router-view页面不会与导航栏重叠
@@ -63,11 +64,9 @@ export default {
 
 <style lang="less" scoped>
 #app {
-  // background: fixed no-repeat center/12% url('@/assets/background.png'),linear-gradient(to bottom right, rgba(30, 29, 67,0.8), rgba(43, 29, 99,0.3));
   border-radius: 4px;
   .routerView{
     position: relative;
-    min-height: 100vh;
     background: fixed no-repeat center/12% url('@/assets/background.png'),linear-gradient(to bottom right, rgba(30, 29, 67), rgba(43, 29, 99,0.6));
   }
   .is-active {
@@ -96,7 +95,6 @@ export default {
       left: 0;
       top: 0;
       width: 100%;
-      height: 100vh;
       background: fixed no-repeat center/28% url('@/assets/background.png'),linear-gradient(to bottom right, rgba(30, 29, 67), rgba(43, 29, 99,0.6));
     }
   }
