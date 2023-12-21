@@ -50,14 +50,14 @@ export default {
     .chatInputBox{
       color: #ffffff;
       background: linear-gradient(to bottom right, rgba(30, 29, 67,0.8), rgba(43, 29, 99,0.3));
-      min-height: 3em;
+      min-height: 4em;
       display: flex;
       align-items: center;
       justify-content: center;
       padding: 0 8px;
       .textareaSty{
         background-color: #ffffff;
-        border-radius: 2px;
+        border-radius: 5px;
         margin: 5px 5px;
       }
       /deep/ .el-textarea__inner::-webkit-scrollbar{
