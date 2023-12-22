@@ -67,6 +67,7 @@ export default {
   border-radius: 4px;
   .routerView{
     position: relative;
+    overflow: auto;
     background: fixed no-repeat center/12% url('@/assets/background.png'),linear-gradient(to bottom right, rgba(30, 29, 67), rgba(43, 29, 99,0.6));
   }
   .is-active {
