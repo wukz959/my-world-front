@@ -1,6 +1,6 @@
 <template>
-  <div class="app">
-    <div class="container" style="overflow: auto">
+  <div class="app" ref="appRef">
+    <div class="container">
       <transition name="slide-fade" mode="out-in">
         <div v-if="show" key="noteKey">
           <div class="main">
@@ -60,10 +60,12 @@ export default {
     handleNoteClick (index) {
       this.detailBlog = this.myBlogs.data[index]
       this.show = false
+      this.$refs.appRef.scrollTo({ top: 0, behavior: 'smooth' })
     },
     handleOpenSourceClick (index) {
       this.detailBlog = this.openSource.data[index]
       this.show = false
+      this.$refs.appRef.scrollTo({ top: 0, behavior: 'smooth' })
     }
   }
 }
@@ -71,24 +73,31 @@ export default {
 
 <style lang="less" scoped>
 .app {
-  .main {
-    display: flex;
-    flex-direction: column;
-    padding: 3vh 18vw;
-    border-radius: 2px;
+  .container{
+    overflow: auto;
+    .main {
+      display: flex;
+      flex-direction: column;
+      padding: 3vh 18vw;
+      border-radius: 2px;
+      overflow: auto;
+    }
+    .myBeian {
+      position: absolute;
+      padding: 3px 0 5px 0;
+      font-size: small;
+      width: 100%;
+      text-align: center;
+      color: gray;
+    }
   }
-  .myBeian {
-    position: absolute;
-    padding: 3px 0 5px 0;
-    font-size: small;
-    width: 100%;
-    text-align: center;
-    color: gray;
-  }
+
   @media (max-width: 800px){
-  .main{
+  .container{
+    .main{
       padding: 3vh 15vw;
     }
+  }
   }
 
 }
